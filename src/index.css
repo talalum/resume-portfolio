@@ -64,10 +64,14 @@ img { display: block; max-width: 100%; }
   position: absolute;
   bottom: -8px;
   left: 0;
-  width: 50%;
+  width: 0%;
   height: 3px;
   background: linear-gradient(90deg, var(--accent), transparent);
   border-radius: 2px;
+  transition: width 0.8s ease 0.3s;
+}
+.fade-up.visible .section__title::after {
+  width: 50%;
 }
 
 .card {
@@ -78,8 +82,9 @@ img { display: block; max-width: 100%; }
   transition: border-color var(--transition), transform var(--transition);
 }
 .card:hover {
-  border-color: rgba(168, 85, 247, 0.35);
-  transform: translateY(-3px);
+  border-color: rgba(168, 85, 247, 0.45);
+  transform: translateY(-4px);
+  box-shadow: 0 8px 32px rgba(168, 85, 247, 0.15);
 }
 
 .badge {
@@ -258,17 +263,34 @@ img { display: block; max-width: 100%; }
 .hero__name {
   font-size: clamp(3rem, 8vw, 5.5rem);
   font-weight: 800;
-  background: linear-gradient(135deg, var(--white) 40%, var(--accent));
+  background: linear-gradient(270deg, var(--accent), var(--white), #c084fc, var(--accent));
+  background-size: 300% 300%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
   line-height: 1.1;
+  animation: gradientShift 6s ease infinite;
+}
+@keyframes gradientShift {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
 .hero__title {
   font-size: clamp(1.1rem, 3vw, 1.6rem);
   font-weight: 400;
   color: var(--text-muted);
+  min-height: 2rem;
+}
+.hero__cursor {
+  color: var(--accent);
+  animation: blink 0.75s step-end infinite;
+  margin-left: 2px;
+}
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
 }
 
 .hero__location {
@@ -353,6 +375,11 @@ img { display: block; max-width: 100%; }
   background: var(--accent);
   border-radius: 50%;
   box-shadow: 0 0 12px rgba(168, 85, 247, 0.6);
+  animation: dotPulse 2s ease-in-out infinite;
+}
+@keyframes dotPulse {
+  0%, 100% { box-shadow: 0 0 8px rgba(168, 85, 247, 0.5); transform: scale(1); }
+  50%       { box-shadow: 0 0 20px rgba(168, 85, 247, 0.9); transform: scale(1.25); }
 }
 .timeline__header {
   display: flex;
@@ -440,11 +467,21 @@ img { display: block; max-width: 100%; }
   border-radius: 6px;
   font-size: 0.85rem;
   transition: all var(--transition);
+  opacity: 0;
+  transform: translateY(12px);
+}
+.skill-tag--visible {
+  animation: tagIn 0.4s ease forwards;
+  animation-delay: var(--tag-delay, 0ms);
+}
+@keyframes tagIn {
+  to { opacity: 1; transform: translateY(0); }
 }
 .skill-tag:hover {
   background: rgba(168, 85, 247, 0.15);
   color: var(--accent);
-  transform: translateY(-2px);
+  transform: translateY(-3px);
+  box-shadow: 0 4px 16px rgba(168, 85, 247, 0.25);
 }
 
 /* ── Military ── */
